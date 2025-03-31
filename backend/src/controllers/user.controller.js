@@ -3,6 +3,7 @@ import {User} from "../models/users.model.js"
 import { APIError } from "../utils/APIError.js";
 import {APIrespones} from "../utils/APIresponse.js"
 import { asynchandling } from "../utils/asynchandling.js";
+import redisClient from "../services/redis.js";
 
 export const register = asynchandling(async(req,res)=>{
    try {
@@ -47,3 +48,54 @@ export const register = asynchandling(async(req,res)=>{
    }
 });
 
+export const login = asynchandling(async(req , res)=>{
+   const {email, username, password } = req.body
+
+   if(!email && !username){
+      throw new APIError(400, "email and username not valid")
+   }
+
+   const user = await User.findOne({
+      $or: [{email}, {username}]
+   }).select("+password")
+
+   if(!user){
+      throw new APIError(409,  'email or username is not exist')
+   }
+
+ const Password =  await user.isPasswordCorrect(password)
+
+   if(!Password){
+      throw new APIError(401, "password is incorrect")
+   }
+
+   const token =  await user.generateJWT()
+
+   return res.status(200).json(
+      new APIrespones(200, { user, token }, "login successfully user")
+   )
+})
+
+export const userProfile = asynchandling(async(req, res)=>{
+   res.status(200).json(
+      new APIrespones(201, {user : req.user}, )
+   )
+})
+
+export const logoutController = async (req, res) => {
+   try {
+
+       const token = req.cookies.token || req.headers.authorization.split(' ')[ 1 ];
+
+       redisClient.set(token, 'logout', 'EX', 60 * 60 * 24);
+
+       res.status(200).json({
+           message: 'Logged out successfully'
+       });
+
+
+   } catch (err) {
+       console.log(err);
+       res.status(400).send(err.message);
+   }
+}
