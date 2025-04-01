@@ -71,6 +71,8 @@ export const login = asynchandling(async(req , res)=>{
 
    const token =  await user.generateJWT()
 
+   delete user._doc.password;
+
    return res.status(200).json(
       new APIrespones(200, { user, token }, "login successfully user")
    )

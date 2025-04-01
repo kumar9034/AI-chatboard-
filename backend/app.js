@@ -3,13 +3,13 @@ import morgan from "morgan"
 import connect from "./src/db/db.js"
 import userRoutes from "./src/routers/user.router.js"
 import cookieParser from "cookie-parser"
-import Redis from "ioredis"
+import cors from 'cors'
 connect()
 
 const app = express()
 
 
-// app.use(cors());
+app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
