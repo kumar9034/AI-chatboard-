@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import {User} from "../models/users.model.js"
-import { APIError } from "../utils/APIError.js";
+import  APIError  from "../utils/APIError.js";
 import {APIrespones} from "../utils/APIresponse.js"
 import { asynchandling } from "../utils/asynchandling.js";
 import redisClient from "../services/redis.js";
