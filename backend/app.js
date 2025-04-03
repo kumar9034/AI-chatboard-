@@ -2,6 +2,7 @@ import express from "express"
 import morgan from "morgan"
 import connect from "./src/db/db.js"
 import userRoutes from "./src/routers/user.router.js"
+import projectRouter from "../backend/src/routers/project.router.js"
 import cookieParser from "cookie-parser"
 import cors from 'cors'
 connect()
@@ -20,6 +21,7 @@ app.get("/", (req, res)=>{
 })
 
 app.use("/user", userRoutes)
+app.use("/project", projectRouter)
 
 // Global error-handling middleware
 app.use((err, req, res, next) => {
