@@ -4,6 +4,7 @@ import  APIError  from "../utils/APIError.js";
 import {APIrespones} from "../utils/APIresponse.js"
 import { asynchandling } from "../utils/asynchandling.js";
 import redisClient from "../services/redis.js";
+import { getAllUsers } from "../services/project.js";
 
 export const register = asynchandling(async(req,res)=>{
    try {
@@ -99,5 +100,27 @@ export const logoutController = async (req, res) => {
    } catch (err) {
        console.log(err);
        res.status(400).send(err.message);
+   }
+}
+
+export const getAllUsersController = async (req, res) => {
+   try {
+ 
+       const loggedInUser = await User.findOne({
+           email: req.user.email
+       })
+ 
+       const allUsers = await getAllUsers({ userId: loggedInUser._id });
+ 
+       return res.status(200).json({
+           users: allUsers
+       })
+ 
+   } catch (err) {
+ 
+       console.log(err)
+ 
+       res.status(400).json({ error: err.message })
+ 
    }
 }

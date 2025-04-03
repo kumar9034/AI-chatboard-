@@ -1,6 +1,8 @@
 import { Error } from "mongoose";
 import projectModel from "../models/project.model.js";
+import { User } from "../models/users.model.js";
 import mongoose from 'mongoose';
+
 
 
  
@@ -106,6 +108,12 @@ export const getProjectById = async ({ projectId }) => {
     return project;
 }
 
+export const getAllUsers = async ({ userId }) => {
+    const users = await User.find({
+        _id: { $ne: userId }
+    });
+    return users;
+}
 
 export default {
   createProjectInDB,getAllProjectByUserId ,addUsersToProject, getProjectById

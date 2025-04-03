@@ -11,26 +11,16 @@ const Home = () => {
     const [project , setproject] = useState([])
 
     const navigate = useNavigate()
-    useEffect(()=>{
-        axios.get("/project/all").then((res)=>{
-            console.log(res.data);
-            setproject(res.data.projects)
-        }).catch((error)=>{
-            console.log(error);
-            
-        })
-
-    },[])
-
+    
     function createProject(e) {
         console.log({projectName});
-
-
+        
+        
         axios.post('/project/create',{
             name : projectName
         }).then(
             (res)=>{
-                console.log(res);
+                console.log(res.data.data.name);
                 setModalOpen(false)
             }
         ).catch((err)=>{
@@ -38,6 +28,15 @@ const Home = () => {
             
         })
     }
+    useEffect(()=>{
+        axios.get("/project/all").then((res)=>{
+            setproject(res.data.projects)
+        }).catch((error)=>{
+            console.log(error);
+            
+        })
+
+    },[])
 
     return (
         <main className="flex flex-wrap">
