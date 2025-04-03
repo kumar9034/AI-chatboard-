@@ -4,15 +4,10 @@ import axios from '../config/Axios'
 
 const Project = () => {
   const location = useLocation()
-  const id = location.state.project
-  const finalid  = id.map((user)=> user._id)
-// console.log(finalid);
-
-
 
   const [isSidepanel, setissidepanel] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [selectedUserId, setSelectedUserId] = useState([])
+  const [selectedUserId, setSelectedUserId] = useState(new Set())
 
   const [users, setuser] = useState([])
 
@@ -39,18 +34,20 @@ const Project = () => {
     });
   }
 
-  const addcollaborators = ()=>{
+  function addCollaborators() {
 
     axios.put("/project/add-user", {
-      projectId : location.state._id,
-      users : Array.from(selectedUserId)
-    }).then((res)=>
-    console.log(res.data),
-    isModalOpen(false)
-    ).catch((err)=>
-    console.log(err)
-    )
-  }
+        projectId: location.state.project._id,
+        users: Array.from(selectedUserId)
+    }).then(res => {
+        console.log(res.data)
+        setIsModalOpen(false)
+
+    }).catch(err => {
+        console.log(err)
+    })
+
+}
 
   return (
     <main className='h-screen w-screen flex'>
@@ -139,7 +136,7 @@ const Project = () => {
               </div>
               <button
                 className='absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600'
-                onClick={() => addcollaborators()}
+                onClick={addCollaborators}
               >
                 Add Collaborators
               </button>

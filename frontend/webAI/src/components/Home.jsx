@@ -41,34 +41,34 @@ const Home = () => {
     return (
         <main className="flex flex-wrap">
             <div className="p-4 ">
-                <div className="projects">
-                    <div
+                <div className="projects flex flex-wrap gap-3">
+                    <button
                         className="project w-40  p-4 font-bold border hover:bg-blue-200 border-slate-300 rounded-md cursor-pointer"
                         onClick={() => setModalOpen(true)}
                     >  New Project
                         <i className="ri-user-add-fill ml-2 text-xl"></i>
-                    </div>
+                    </button>
                 </div>
             </div>
 
             {Array.isArray(project) && project.map((e) => (
-    <div key={e._id}
-    onClick={()=>{navigate("/project", {
-        state: {project}
-    })}}
-    >
-        <div className="ml-5 border border-slate-300  mt-5 px-6 py-2 w-min text-sm rounded cursor-pointer hover:bg-blue-200 ">
-        <p className="font-bold">{e.name}</p>
-            <div className="flex gap-2 ">
-                <i className="ri-team-fill text-[17px]"></i>
-                collaborators:
-                <div>{e.users.length}</div>
-            </div>
-
-
-        </div>
-    </div>
-))}
+                <div key={e._id}
+                    onClick={() => {
+                        navigate(`/project/${e._id}`, {
+                            state: { project: e }
+                        });
+                    }}
+                >
+                    <div className="ml-5 border border-slate-300 mt-5 px-6 py-2 w-min text-sm rounded cursor-pointer hover:bg-blue-200 ">
+                        <p className="font-bold">{e.name}</p>
+                        <div className="flex gap-2 ">
+                            <i className="ri-team-fill text-[17px]"></i>
+                            collaborators:
+                            <div>{e.users.length}</div>
+                        </div>
+                    </div>
+                </div>
+            ))}
             {/* Modal */}
             {isModalOpen && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">

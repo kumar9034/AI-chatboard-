@@ -6,6 +6,7 @@ import Home from '../components/Home'
 import Project from '../components/Project'
  
 const AppRouter = () => {
+
   return (
     <div>
         <BrowserRouter>
@@ -14,6 +15,7 @@ const AppRouter = () => {
                 <Route path='/register' element={<Register/>} />
                 <Route path='/login' element={<Login/>} />
                 <Route path='/project' element={<Project/>} />
+                <Route path='/project/:id' element={<Project/>} /> {/* New dynamic route */}
             </Routes>
         </BrowserRouter>
       
