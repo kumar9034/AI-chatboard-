@@ -23,7 +23,7 @@ const Register = () => {
                 const response = res.data.data 
                 console.log(response);
                 localStorage.setItem('token', response.token)
-                set(resp)
+                set(res)
                 navigation("/login")
             }).catch((err)=>{
                 console.log(err.response)

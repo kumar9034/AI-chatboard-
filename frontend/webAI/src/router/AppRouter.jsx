@@ -4,6 +4,7 @@ import Register from '../components/Register'
 import Login from '../components/Login'
 import Home from '../components/Home'
 import Project from '../components/Project'
+import UserAuth from '../auth/UserAuth'
  
 const AppRouter = () => {
 
@@ -11,11 +12,11 @@ const AppRouter = () => {
     <div>
         <BrowserRouter>
             <Routes>
-                <Route path='/' element={<Home/>} />
+                <Route path='/' element={<UserAuth><Home/></UserAuth>} />
                 <Route path='/register' element={<Register/>} />
                 <Route path='/login' element={<Login/>} />
                 <Route path='/project' element={<Project/>} />
-                <Route path='/project/:id' element={<Project/>} /> {/* New dynamic route */}
+                <Route path='/project/:id' element={<UserAuth><Project/></UserAuth>} /> {/* New dynamic route */}
             </Routes>
         </BrowserRouter>
       
